@@ -4,6 +4,7 @@
 #include "AlgorytmSortowania.h"
 #include <QMainWindow>
 #include <qgraphicsscene.h>
+#include <thread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,16 +25,30 @@ public:
     void setScene();
     void setSliders(int rd, int s);
     QString toString(Type type);
+    void startSorting();
+    void pauseSorting();
+    void resetSorting();
+    void changeAlgorithm(int index);
 
 private slots:
     void on_hs_rozmiarDanych_sliderMoved(int position);
 
     void on_hs_szybkosc_sliderMoved(int position);
 
+    void on_cb_typ_currentIndexChanged(int index);
+
+    void on_pb_start_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* scena;
-    QVector<int> data;
+    std::vector<int> data;
     QVector<Type> types;
+    SortingAlgorithm* algorithm;
+    std::thread sortingThread;
+    std::mutex mtx;
+    bool paused = false;
+    bool reset = false;
+    int delay = 50;
 };
 #endif // MAINWINDOW_H

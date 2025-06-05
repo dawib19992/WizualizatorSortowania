@@ -5,7 +5,7 @@
 
 enum Type{
     MergeSort,
-    Count
+    Count //to zawsze na końcu, bo giga ważne!!!!!!
 };
 class SortingAlgorithm {
 protected:

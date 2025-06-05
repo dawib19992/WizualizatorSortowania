@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "AlgorytmSortowania.h"
+#include "mergesort.h"
 #include <random>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -21,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    reset = true;
+    if (sortingThread.joinable()) sortingThread.join();
     delete ui;
 }
 
@@ -32,7 +35,6 @@ void MainWindow::drawData(){
         scena->addRect(QRect((width * i), ui->gv_wizualizator->height() - singleData, (width / 2), singleData), QPen(Qt::black), QBrush(Qt::red));
         i++;
     }
-
 }
 
 void MainWindow::setData(int noData){
@@ -93,5 +95,47 @@ void MainWindow::setSliders(int rd, int s){
 void MainWindow::on_hs_szybkosc_sliderMoved(int position)
 {
     ui->lbl_szybkosc->setText(QString::number(position));
+}
+
+void MainWindow::startSorting(){
+    qInfo() << "Jestem";
+    if(sortingThread.joinable()) return;
+    paused = false;
+    reset = false;
+    sortingThread = std::thread([this]{
+        algorithm->sort(data, mtx, paused, reset);
+        if(!reset){
+            QMetaObject::invokeMethod(this, [this]{drawData();}, Qt::QueuedConnection);
+        }
+    });
+}
+void MainWindow::pauseSorting(){
+
+}
+void MainWindow::resetSorting(){
+
+}
+
+void MainWindow::changeAlgorithm(int index){
+    Type type = static_cast<Type>(index);
+    switch(type){
+    case Type::MergeSort:
+        algorithm = new class MergeSort();
+        break;
+    default:
+        break;
+    }
+    resetSorting();
+}
+
+void MainWindow::on_cb_typ_currentIndexChanged(int index)
+{
+    changeAlgorithm(index);
+}
+
+
+void MainWindow::on_pb_start_clicked()
+{
+    startSorting();
 }
 
