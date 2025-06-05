@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qgraphicsscene.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,8 +17,15 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void drawData();
+    void setData(int noData);
+
+private slots:
+    void on_hs_rozmiarDanych_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene* scena;
+    QVector<int> data;
 };
 #endif // MAINWINDOW_H

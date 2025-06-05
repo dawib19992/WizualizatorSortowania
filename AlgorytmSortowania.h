@@ -3,6 +3,9 @@
 #include <vector>
 #include <mutex>
 
+enum Type{
+    MergeSort,
+};
 class SortingAlgorithm {
 protected:
     int operations = 0;
