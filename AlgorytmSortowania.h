@@ -5,14 +5,18 @@
 
 enum Type{
     MergeSort,
+    BubbleSort,
     Count //to zawsze na końcu, bo giga ważne!!!!!!
 };
+
+class MainWindow;
+
 class SortingAlgorithm {
 protected:
     int operations = 0;
 public:
     virtual ~SortingAlgorithm() = default;
-    virtual void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset) = 0;
+    virtual void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) = 0;
     int getOperations() const { return operations; }
 };
 

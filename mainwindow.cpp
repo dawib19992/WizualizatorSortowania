@@ -27,12 +27,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::drawData(){
+void MainWindow::drawData(int h1, int h2){
     scena->clear();
     double width = ui->gv_wizualizator->width() / (double)data.size();
     int i = 0;
     for(auto singleData : std::as_const(data)){
-        scena->addRect(QRect((width * i), ui->gv_wizualizator->height() - singleData, (width / 2), singleData), QPen(Qt::black), QBrush(Qt::red));
+        QBrush brush = (i == h1 || i == h2) ? QBrush(Qt::red) : QBrush(Qt::blue);
+        scena->addRect(QRect((width * i), ui->gv_wizualizator->height() - singleData, (width / 2), singleData), QPen(Qt::black), brush);
         i++;
     }
 }
@@ -103,17 +104,27 @@ void MainWindow::startSorting(){
     paused = false;
     reset = false;
     sortingThread = std::thread([this]{
-        algorithm->sort(data, mtx, paused, reset);
+        algorithm->sort(data, mtx, paused, reset, this);
         if(!reset){
             QMetaObject::invokeMethod(this, [this]{drawData();}, Qt::QueuedConnection);
         }
     });
 }
 void MainWindow::pauseSorting(){
-
+    paused = !paused;
+    ui->pb_pauza->setText(paused ? "Wznów" : "Pauza");
 }
 void MainWindow::resetSorting(){
+    reset = true;
+    if (sortingThread.joinable()) sortingThread.join();
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(10, 200);
+    data.resize(ui->hs_rozmiarDanych->value());
+    for (int& val : data) val = dis(gen);
+    drawData();
+    reset = false;
 }
 
 void MainWindow::changeAlgorithm(int index){
@@ -133,9 +144,18 @@ void MainWindow::on_cb_typ_currentIndexChanged(int index)
     changeAlgorithm(index);
 }
 
-
 void MainWindow::on_pb_start_clicked()
 {
     startSorting();
+}
+
+void MainWindow::on_pb_stop_clicked()
+{
+    resetSorting();
+}
+
+void MainWindow::on_pb_pauza_clicked()
+{
+    pauseSorting();
 }
 

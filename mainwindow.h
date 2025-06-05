@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void drawData();
+    void drawData(int h1 = -1, int h2 = -1);
     void setData(int noData);
     void setAlgorithms();
     void setScene();
@@ -29,6 +29,8 @@ public:
     void pauseSorting();
     void resetSorting();
     void changeAlgorithm(int index);
+    int getDelay() {return delay;}
+
 
 private slots:
     void on_hs_rozmiarDanych_sliderMoved(int position);
@@ -38,6 +40,10 @@ private slots:
     void on_cb_typ_currentIndexChanged(int index);
 
     void on_pb_start_clicked();
+
+    void on_pb_stop_clicked();
+
+    void on_pb_pauza_clicked();
 
 private:
     Ui::MainWindow *ui;

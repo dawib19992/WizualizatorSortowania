@@ -1,16 +1,16 @@
 #ifndef MERGESORT_H
 #define MERGESORT_H
 #include "AlgorytmSortowania.h"
+#include "mainwindow.h"
 
 class MergeSort : public SortingAlgorithm
 {
 private:
     Type type = Type::MergeSort;
     void merge(std::vector<int>& data, int left, int mid, int right, std::mutex& mtx);
-    void mergeSort(std::vector<int>& data, int left, int right, std::mutex& mtx, bool& paused, bool& reset);
 public:
     MergeSort() = default;
-    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset) override;
+    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
     Type getType() { return type;}
 };
 
