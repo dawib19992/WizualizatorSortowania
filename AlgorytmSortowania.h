@@ -5,6 +5,7 @@
 
 enum Type{
     MergeSort,
+    Count
 };
 class SortingAlgorithm {
 protected:
@@ -14,6 +15,5 @@ public:
     virtual void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset) = 0;
     int getOperations() const { return operations; }
 };
-
 
 #endif // ALGORYTMSORTOWANIA_H
