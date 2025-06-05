@@ -31,7 +31,6 @@ public:
     void changeAlgorithm(int index);
     int getDelay() {return delay;}
 
-
 private slots:
     void on_hs_rozmiarDanych_sliderMoved(int position);
 
@@ -48,7 +47,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* scena;
-    std::vector<int> data;
+    std::vector<float> data;
     QVector<Type> types;
     SortingAlgorithm* algorithm;
     std::thread sortingThread;

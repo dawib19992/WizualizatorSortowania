@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "AlgorytmSortowania.h"
 #include "mergesort.h"
+#include "bubblesort.h"
 #include <random>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -39,11 +40,12 @@ void MainWindow::drawData(int h1, int h2){
 }
 
 void MainWindow::setData(int noData){
+
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(10, 200);
-    data.resize(noData);
-    for (int& val : data) val = dis(gen);
+    std::uniform_real_distribution<> dis(10, 500);
+    data.resize(ui->hs_rozmiarDanych->value());
+    for (float& val : data) val = dis(gen);
 }
 
 void MainWindow::on_hs_rozmiarDanych_sliderMoved(int position)
@@ -71,17 +73,6 @@ void MainWindow::setScene(){
 }
 
 
-QString MainWindow::toString(Type type){
-    switch(type){
-    case Type::MergeSort:
-        return "MergeSort";
-        break;
-    default:
-        return "Not a algoritm type";
-        break;
-    }
-}
-
 void MainWindow::setSliders(int rd, int s){
     ui->hs_rozmiarDanych->setMaximum(rd);
     ui->hs_rozmiarDanych->setMinimum(10);
@@ -93,13 +84,7 @@ void MainWindow::setSliders(int rd, int s){
     ui->lbl_szybkosc->setText(QString::number(ui->hs_szybkosc->value()));
 }
 
-void MainWindow::on_hs_szybkosc_sliderMoved(int position)
-{
-    ui->lbl_szybkosc->setText(QString::number(position));
-}
-
 void MainWindow::startSorting(){
-    qInfo() << "Jestem";
     if(sortingThread.joinable()) return;
     paused = false;
     reset = false;
@@ -117,12 +102,7 @@ void MainWindow::pauseSorting(){
 void MainWindow::resetSorting(){
     reset = true;
     if (sortingThread.joinable()) sortingThread.join();
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(10, 200);
-    data.resize(ui->hs_rozmiarDanych->value());
-    for (int& val : data) val = dis(gen);
+    setData(ui->hs_rozmiarDanych->value());
     drawData();
     reset = false;
 }
@@ -132,6 +112,9 @@ void MainWindow::changeAlgorithm(int index){
     switch(type){
     case Type::MergeSort:
         algorithm = new class MergeSort();
+        break;
+    case Type::BubbleSort:
+        algorithm = new class BubbleSort();
         break;
     default:
         break;
@@ -157,5 +140,26 @@ void MainWindow::on_pb_stop_clicked()
 void MainWindow::on_pb_pauza_clicked()
 {
     pauseSorting();
+}
+
+
+void MainWindow::on_hs_szybkosc_sliderMoved(int position)
+{
+    ui->lbl_szybkosc->setText(QString::number(position));
+}
+
+
+QString MainWindow::toString(Type type){
+    switch(type){
+    case Type::MergeSort:
+        return "Merge Sort";
+        break;
+    case Type::BubbleSort:
+        return "Bubble Sort";
+        break;
+    default:
+        return "Not a algoritm type";
+        break;
+    }
 }
 
