@@ -4,6 +4,7 @@
 #include "mergesort.h"
 #include "bubblesort.h"
 #include "quicksort.h"
+#include "radixsort.h"
 #include <random>
 #include <QMessageBox>
 
@@ -129,14 +130,16 @@ void MainWindow::changeAlgorithm(int index){
     Type type = static_cast<Type>(index);
     switch(type){
     case Type::MergeSort:
-        algorithm = new class MergeSort();
+        algorithm = std::make_unique<class MergeSort>();
         break;
     case Type::BubbleSort:
-        algorithm = new class BubbleSort();
+        algorithm = std::make_unique<class BubbleSort>();
         break;
     case Type::QuickSort:
-        algorithm = new class QuickSort();
+        algorithm = std::make_unique<class QuickSort>();
         break;
+    case Type::RadixSort:
+        algorithm = std::make_unique<class RadixSort>();
     default:
         break;
     }
@@ -171,19 +174,25 @@ void MainWindow::on_hs_szybkosc_sliderMoved(int position)
 
 
 QString MainWindow::toString(Type type){
+    QString toReturn;
     switch(type){
     case Type::MergeSort:
-        return "Merge Sort";
+        toReturn = "Merge Sort";
         break;
     case Type::BubbleSort:
-        return "Bubble Sort";
+        toReturn = "Bubble Sort";
         break;
     case Type::QuickSort:
-        return "Quick Sort";
+        toReturn = "Quick Sort";
+        break;
+    case Type::RadixSort:
+        toReturn = "Radix Sort";
+        break;
     default:
-        return "Not a algoritm type";
+        toReturn = "Not a algoritm type";
         break;
     }
+    return toReturn;
 }
 
 bool MainWindow::checkIfSorted()

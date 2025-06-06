@@ -51,7 +51,7 @@ private:
     QGraphicsScene* scena;
     std::vector<float> data;
     QVector<Type> types;
-    SortingAlgorithm* algorithm;
+    std::unique_ptr<SortingAlgorithm> algorithm;
     std::thread sortingThread;
     std::mutex mtx;
     bool paused = false;
