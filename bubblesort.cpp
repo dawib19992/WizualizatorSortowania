@@ -27,7 +27,7 @@ void BubbleSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, b
                 operations++;
             }
             mtx.unlock();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
         }
     }
 }
