@@ -30,7 +30,8 @@ public:
     void pauseSorting();
     void resetSorting();
     void changeAlgorithm(int index);
-    int getDelay() {return ui->hs_szybkosc->value();}
+    int getDelay() {return ui->hs_szybkosc->value();};
+    bool checkIfSorted();
 
 private slots:
     void on_hs_rozmiarDanych_sliderMoved(int position);

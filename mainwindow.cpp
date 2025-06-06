@@ -3,14 +3,16 @@
 #include "AlgorytmSortowania.h"
 #include "mergesort.h"
 #include "bubblesort.h"
+#include "quicksort.h"
 #include <random>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int rozmiarDanych = 500;
+    int rozmiarDanych = 250;
     int maksSzybkosc = 600; //w sekundach
     setSliders(rozmiarDanych, maksSzybkosc);
     setScene();
@@ -89,13 +91,28 @@ void MainWindow::startSorting(){
     if(sortingThread.joinable()) return;
     paused = false;
     reset = false;
+
     sortingThread = std::thread([this]{
         algorithm->sort(data, mtx, paused, reset, this);
-        if(!reset){
-            QMetaObject::invokeMethod(this, [this]{drawData();}, Qt::QueuedConnection);
+
+        if (!reset) {
+            QMetaObject::invokeMethod(this, [this] {
+                drawData();
+            }, Qt::QueuedConnection);
+
+            bool sortedCorrectly = this->checkIfSorted();
+
+            QMetaObject::invokeMethod(this, [this, sortedCorrectly] {
+                if (sortedCorrectly) {
+                    QMessageBox::information(this, "Wynik", "Dane zostały poprawnie posortowane.");
+                } else {
+                    QMessageBox::warning(this, "Błąd", "Dane nie są poprawnie posortowane.");
+                }
+            }, Qt::QueuedConnection);
         }
     });
 }
+
 void MainWindow::pauseSorting(){
     paused = !paused;
     ui->pb_pauza->setText(paused ? "Wznów" : "Pauza");
@@ -116,6 +133,9 @@ void MainWindow::changeAlgorithm(int index){
         break;
     case Type::BubbleSort:
         algorithm = new class BubbleSort();
+        break;
+    case Type::QuickSort:
+        algorithm = new class QuickSort();
         break;
     default:
         break;
@@ -158,9 +178,48 @@ QString MainWindow::toString(Type type){
     case Type::BubbleSort:
         return "Bubble Sort";
         break;
+    case Type::QuickSort:
+        return "Quick Sort";
     default:
         return "Not a algoritm type";
         break;
     }
 }
+
+bool MainWindow::checkIfSorted()
+{
+    int n = data.size();
+    if (n <= 1) return true;
+
+    for (int i = 0; i < n - 1; ++i)
+    {
+        while (paused && !reset)
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+        if (reset) return false;
+
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+
+            QMetaObject::invokeMethod(this, [this, i] {
+                drawData(i, i + 1); // Pokaż porównanie
+            }, Qt::QueuedConnection);
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(getDelay()));
+
+        {
+            std::lock_guard<std::mutex> lock(mtx);
+            if (data[i] > data[i + 1])
+                return false;
+        }
+    }
+
+    QMetaObject::invokeMethod(this, [this] {
+        drawData(); // końcowe odświeżenie
+    }, Qt::QueuedConnection);
+
+    return true;
+}
+
 
