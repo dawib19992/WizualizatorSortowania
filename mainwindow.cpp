@@ -53,6 +53,7 @@ void MainWindow::on_hs_rozmiarDanych_sliderMoved(int position)
     ui->lbl_rozmiarDanych->setText(QString::number(position));
     setData(position);
     drawData();
+    resetSorting();
 }
 
 void MainWindow::setAlgorithms(){

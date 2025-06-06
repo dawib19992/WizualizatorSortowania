@@ -68,7 +68,7 @@ void MergeSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bo
                     temp[k++] = data[j++];
                 }
                 operations++;
-                std::this_thread::sleep_for(std::chrono::milliseconds(window ? window->getDelay() : 50));
+                std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
             }
             while (i <= mid) temp[k++] = data[i++];
             while (j <= right) temp[k++] = data[j++];
@@ -79,7 +79,7 @@ void MergeSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bo
                     window->drawData();
                 }, Qt::QueuedConnection);
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(window ? window->getDelay() : 50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
         }
     }
 }

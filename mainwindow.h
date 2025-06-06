@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "AlgorytmSortowania.h"
+#include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <qgraphicsscene.h>
 #include <thread>
@@ -29,7 +30,7 @@ public:
     void pauseSorting();
     void resetSorting();
     void changeAlgorithm(int index);
-    int getDelay() {return delay;}
+    int getDelay() {return ui->hs_szybkosc->value();}
 
 private slots:
     void on_hs_rozmiarDanych_sliderMoved(int position);
@@ -54,6 +55,5 @@ private:
     std::mutex mtx;
     bool paused = false;
     bool reset = false;
-    int delay = 50;
 };
 #endif // MAINWINDOW_H
