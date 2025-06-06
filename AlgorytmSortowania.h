@@ -6,6 +6,7 @@
 enum Type{
     MergeSort,
     BubbleSort,
+    QuickSort,
     Count //to zawsze na końcu, bo giga ważne!!!!!!
 };
 
