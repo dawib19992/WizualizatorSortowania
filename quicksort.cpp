@@ -21,7 +21,7 @@ void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
                     window->drawData(i, pivotIndex);
                 }, Qt::QueuedConnection);
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(window ? window->getDelay() : 50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
         } while (i < prawy && data[i] < pivot && !reset);
 
         // Szukanie z prawej strony
@@ -32,7 +32,7 @@ void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
                     window->drawData(j, pivotIndex);
                 }, Qt::QueuedConnection);
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(window ? window->getDelay() : 50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
         } while (j > lewy && data[j] > pivot && !reset);
 
         if (reset) return;
@@ -50,7 +50,7 @@ void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
                 }, Qt::QueuedConnection);
             }
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(window ? window->getDelay() : 50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(window->getDelay()));
         }
         else
         {
@@ -62,8 +62,11 @@ void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
         }
     }
 
-    quickSort(data, lewy, j, mtx, paused, reset, window);
-    quickSort(data, i, prawy, mtx, paused, reset, window);
+    if (j > lewy)
+        quickSort(data, lewy, j, mtx, paused, reset, window);
+    if (i < prawy)
+        quickSort(data, i, prawy, mtx, paused, reset, window);
+
 }
 
 
