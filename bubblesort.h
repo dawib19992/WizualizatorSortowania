@@ -6,11 +6,10 @@
 class BubbleSort : public SortingAlgorithm
 {
 protected:
-    int operations = 0;
     Type type = Type::BubbleSort;
 public:
     BubbleSort() = default;
-    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
+    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
     Type getType() { return type;}
 };
 
