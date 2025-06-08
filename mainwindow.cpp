@@ -7,6 +7,7 @@
 #include "radixsort.h"
 #include <random>
 #include <QMessageBox>
+#include <QElapsedTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -94,20 +95,29 @@ void MainWindow::startSorting(){
     reset = false;
 
     sortingThread = std::thread([this]{
+        QElapsedTimer timer;
+        timer.start();
+
         algorithm->sort(data, mtx, paused, reset, this);
 
-        if (!reset) {
+        double elapsed = timer.nsecsElapsed() / 1000000000.0;
+
+        if (!reset) {            
             QMetaObject::invokeMethod(this, [this] {
                 drawData();
             }, Qt::QueuedConnection);
 
             bool sortedCorrectly = this->checkIfSorted();
 
-            QMetaObject::invokeMethod(this, [this, sortedCorrectly] {
+            QMetaObject::invokeMethod(this, [this, sortedCorrectly, elapsed] {
+                QString message;
+                message = QString("%1\nCzas: %2 s")
+                              .arg(sortedCorrectly ? "Dane zostały poprawnie posortowane." : "Dane NIE są poprawnie posortowane.")
+                              .arg(QString::number(elapsed, 'f', 3));  // 3 miejsca po przecinku
                 if (sortedCorrectly) {
-                    QMessageBox::information(this, "Wynik", "Dane zostały poprawnie posortowane.");
+                    QMessageBox::information(this, "Wynik", message);
                 } else {
-                    QMessageBox::warning(this, "Błąd", "Dane nie są poprawnie posortowane.");
+                    QMessageBox::warning(this, "Błąd", message);
                 }
             }, Qt::QueuedConnection);
         }
