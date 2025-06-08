@@ -3,7 +3,7 @@
 #include <qobjectdefs.h>
 #include <thread>
 
-void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
+void QuickSort::quickSort(std::vector<int>& data, int lewy, int prawy,
                           std::mutex& mtx, bool& paused, bool& reset, MainWindow* window)
 {
     if (prawy <= lewy || reset) return;
@@ -71,7 +71,7 @@ void QuickSort::quickSort(std::vector<float>& data, int lewy, int prawy,
 
 
 
-void QuickSort::sort(std::vector<float>& data, std::mutex& mtx,
+void QuickSort::sort(std::vector<int>& data, std::mutex& mtx,
                      bool& paused, bool& reset, MainWindow* window)
 {
     operations = 0;

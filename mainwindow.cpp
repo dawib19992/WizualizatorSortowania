@@ -46,9 +46,9 @@ void MainWindow::setData(int noData){
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(10, 500);
+    std::uniform_int_distribution<> dis(10, 500);
     data.resize(ui->hs_rozmiarDanych->value());
-    for (float& val : data) val = dis(gen);
+    for (int& val : data) val = dis(gen);
 }
 
 void MainWindow::on_hs_rozmiarDanych_sliderMoved(int position)

@@ -3,7 +3,7 @@
 #include <qobjectdefs.h>
 #include <thread>
 
-void BubbleSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window){
+void BubbleSort::sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window){
     operations = 0;
     int n = data.size();
     if (n <= 1) return;

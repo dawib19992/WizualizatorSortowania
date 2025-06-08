@@ -49,7 +49,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* scena;
-    std::vector<float> data;
+    std::vector<int> data;
     QVector<Type> types;
     std::unique_ptr<SortingAlgorithm> algorithm;
     std::thread sortingThread;

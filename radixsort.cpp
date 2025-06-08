@@ -4,9 +4,9 @@
 #include <cmath>
 #include <QMetaObject>
 
-void RadixSort::countingSort(std::vector<float>& data, int exp, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
+void RadixSort::countingSort(std::vector<int>& data, int exp, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
     int n = data.size();
-    std::vector<float> output(n);
+    std::vector<int> output(n);
     std::vector<int> count(10, 0);
 
     for (int i = 0; i < n; i++) {
@@ -56,11 +56,11 @@ void RadixSort::countingSort(std::vector<float>& data, int exp, std::mutex& mtx,
     }
 }
 
-void RadixSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
+void RadixSort::sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
     operations = 0;
     int n = data.size();
     if (n <= 1) return;
-    float max = data[0];
+    int max = data[0];
     for (int i = 1; i < n; i++) {
         if (data[i] > max) max = data[i];
     }

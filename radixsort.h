@@ -7,10 +7,10 @@ class RadixSort : public SortingAlgorithm
 {
 protected:
     Type type = Type::RadixSort;
-    void countingSort(std::vector<float>& data, int exp, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
+    void countingSort(std::vector<int>& data, int exp, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
 public:
     RadixSort() = default;
-    void sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
+    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
     Type getType() { return type;}
 };
 

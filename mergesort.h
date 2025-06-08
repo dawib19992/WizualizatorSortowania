@@ -7,10 +7,10 @@ class MergeSort : public SortingAlgorithm
 {
 private:
     Type type = Type::MergeSort;
-    void merge(std::vector<float>& data, int left, int mid, int right, std::mutex& mtx);
+    void merge(std::vector<int>& data, int left, int mid, int right, std::mutex& mtx);
 public:
     MergeSort() = default;
-    void sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
+    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) override;
     Type getType() { return type;}
 };
 

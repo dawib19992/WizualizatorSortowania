@@ -4,7 +4,7 @@
 #include <thread>
 #include <chrono>
 
-void MergeSort::merge(std::vector<float>& data, int left, int mid, int right, std::mutex& mtx) {
+void MergeSort::merge(std::vector<int>& data, int left, int mid, int right, std::mutex& mtx) {
     std::vector<int> temp(right - left + 1);
     int i = left;
     int j = mid + 1;
@@ -39,7 +39,7 @@ void MergeSort::merge(std::vector<float>& data, int left, int mid, int right, st
     }
 }
 
-void MergeSort::sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
+void MergeSort::sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window) {
     operations = 0;
     int n = data.size();
     if (n <= 1) return;

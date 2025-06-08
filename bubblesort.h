@@ -10,7 +10,7 @@ protected:
     Type type = Type::BubbleSort;
 public:
     BubbleSort() = default;
-    void sort(std::vector<float>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
+    void sort(std::vector<int>& data, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
     Type getType() { return type;}
 };
 
