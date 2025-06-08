@@ -154,11 +154,15 @@ void MainWindow::on_cb_typ_currentIndexChanged(int index)
 void MainWindow::on_pb_start_clicked()
 {
     startSorting();
+    ui->pb_start->setEnabled(false);
+    ui->hs_rozmiarDanych->setEnabled(false);
 }
 
 void MainWindow::on_pb_stop_clicked()
 {
     resetSorting();
+    ui->pb_start->setEnabled(true);
+    ui->hs_rozmiarDanych->setEnabled(true);
 }
 
 void MainWindow::on_pb_pauza_clicked()
