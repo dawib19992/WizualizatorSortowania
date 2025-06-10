@@ -4,6 +4,7 @@
 #include "mergesort.h"
 #include "bubblesort.h"
 #include "quicksort.h"
+#include "heapsort.h"
 #include "radixsort.h"
 #include <random>
 #include <QMessageBox>
@@ -113,8 +114,8 @@ void MainWindow::startSorting(){
                 QString message;
                 message = QString("%1\nCzas: %2 s\nOperacje: %3")
                               .arg(sortedCorrectly ? "Dane zostały poprawnie posortowane." : "Dane NIE są poprawnie posortowane.")
-                              .arg(QString::number(elapsed, 'f', 3))  // 3 miejsca po przecinku
-                              .arg(QString::number(algorithm->getOperations()));
+                              .arg(QString::number(elapsed, 'f', 3))
+                              .arg(algorithm->getOperations());
                 if (sortedCorrectly) {
                     QMessageBox::information(this, "Wynik", message);
                 } else {
@@ -151,6 +152,10 @@ void MainWindow::changeAlgorithm(int index){
         break;
     case Type::RadixSort:
         algorithm = std::make_unique<class RadixSort>();
+        break;
+    case Type::HeapSort:
+        algorithm = std::make_unique<class HeapSort>();
+        break;
     default:
         break;
     }
@@ -202,6 +207,9 @@ QString MainWindow::toString(Type type){
         break;
     case Type::RadixSort:
         toReturn = "Radix Sort";
+        break;
+    case Type::HeapSort:
+        toReturn = "Heap Sort";
         break;
     default:
         toReturn = "Not a algoritm type";

@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         quicksort.h quicksort.cpp
         radixsort.h
         radixsort.cpp
+        heapsort.h heapsort.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
