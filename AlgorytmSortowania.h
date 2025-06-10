@@ -8,6 +8,7 @@ enum Type{
     BubbleSort,
     QuickSort,
     RadixSort,
+    HeapSort,
     Count //to zawsze na końcu, bo giga ważne!!!!!!
 };
 
