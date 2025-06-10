@@ -111,9 +111,10 @@ void MainWindow::startSorting(){
 
             QMetaObject::invokeMethod(this, [this, sortedCorrectly, elapsed] {
                 QString message;
-                message = QString("%1\nCzas: %2 s")
+                message = QString("%1\nCzas: %2 s\nOperacje: %3")
                               .arg(sortedCorrectly ? "Dane zostały poprawnie posortowane." : "Dane NIE są poprawnie posortowane.")
-                              .arg(QString::number(elapsed, 'f', 3));  // 3 miejsca po przecinku
+                              .arg(QString::number(elapsed, 'f', 3))  // 3 miejsca po przecinku
+                              .arg(QString::number(algorithm->getOperations()));
                 if (sortedCorrectly) {
                     QMessageBox::information(this, "Wynik", message);
                 } else {
