@@ -234,7 +234,7 @@ bool MainWindow::checkIfSorted()
             std::lock_guard<std::mutex> lock(mtx);
 
             QMetaObject::invokeMethod(this, [this, i] {
-                drawData(i, i + 1); // Pokaż porównanie
+                drawData(i, i + 1);
             }, Qt::QueuedConnection);
         }
 
@@ -248,7 +248,7 @@ bool MainWindow::checkIfSorted()
     }
 
     QMetaObject::invokeMethod(this, [this] {
-        drawData(); // końcowe odświeżenie
+        drawData();
     }, Qt::QueuedConnection);
 
     return true;
