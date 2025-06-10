@@ -6,6 +6,7 @@
 #include "quicksort.h"
 #include "heapsort.h"
 #include "radixsort.h"
+#include "bogosort.h"
 #include <random>
 #include <QMessageBox>
 #include <QElapsedTimer>
@@ -156,6 +157,10 @@ void MainWindow::changeAlgorithm(int index){
     case Type::HeapSort:
         algorithm = std::make_unique<class HeapSort>();
         break;
+    case Type::BogoSort:
+        algorithm = std::make_unique<class BogoSort>();
+        break;
+
     default:
         break;
     }
@@ -210,6 +215,9 @@ QString MainWindow::toString(Type type){
         break;
     case Type::HeapSort:
         toReturn = "Heap Sort";
+        break;
+    case Type::BogoSort:
+        toReturn = "Bogo Sort";
         break;
     default:
         toReturn = "Not a algoritm type";
