@@ -7,7 +7,8 @@ class QuickSort : public SortingAlgorithm
 {
 private:
     Type type = Type::QuickSort;
-    static void quickSort(std::vector<int>& data, int lewy, int prawy, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
+    void quickSort(std::vector<int>& data, int lewy, int prawy, std::mutex& mtx, bool& paused, bool& reset, MainWindow* window);
+    int selectMedian(std::vector<int>& data, int lewy, int prawy);
 
 public:
     QuickSort() = default;
