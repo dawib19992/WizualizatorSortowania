@@ -10,6 +10,7 @@ enum Type{
     RadixSort,
     HeapSort,
     BogoSort,
+    SleepSort,
     Count //to zawsze na końcu, bo giga ważne!!!!!!
 };
 
