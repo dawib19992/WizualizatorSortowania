@@ -31,6 +31,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         radixsort.h
         radixsort.cpp
         heapsort.h heapsort.cpp
+        sleepsort.h sleepsort.cpp
+        bogosort.h bogosort.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

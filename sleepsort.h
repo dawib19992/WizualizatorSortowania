@@ -2,6 +2,7 @@
 #define SLEEPSORT_H
 
 #include "AlgorytmSortowania.h"
+#include "mainwindow.h"
 
 class SleepSort : public SortingAlgorithm
 {
